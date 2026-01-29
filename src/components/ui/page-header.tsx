@@ -1,0 +1,55 @@
+import { ReactNode } from "react";
+import Link from "next/link";
+import { ChevronRight } from "lucide-react";
+
+interface Breadcrumb {
+    label: string;
+    href?: string;
+}
+
+interface PageHeaderProps {
+    title: string;
+    description?: string;
+    breadcrumbs?: Breadcrumb[];
+    actions?: ReactNode;
+}
+
+export function PageHeader({ title, description, breadcrumbs, actions }: PageHeaderProps) {
+    return (
+        <div className="mb-6">
+            {/* Breadcrumbs */}
+            {breadcrumbs && breadcrumbs.length > 0 && (
+                <nav className="flex items-center gap-2 text-sm mb-3" aria-label="Breadcrumb">
+                    {breadcrumbs.map((crumb, index) => (
+                        <div key={index} className="flex items-center gap-2">
+                            {index > 0 && (
+                                <ChevronRight className="w-4 h-4 text-neutral-500" />
+                            )}
+                            {crumb.href ? (
+                                <Link
+                                    href={crumb.href}
+                                    className="text-neutral-400 hover:text-neutral-300 transition-colors"
+                                >
+                                    {crumb.label}
+                                </Link>
+                            ) : (
+                                <span className="text-neutral-300">{crumb.label}</span>
+                            )}
+                        </div>
+                    ))}
+                </nav>
+            )}
+
+            {/* Header */}
+            <div className="flex items-start justify-between gap-4">
+                <div>
+                    <h1 className="text-3xl font-bold mb-2">{title}</h1>
+                    {description && (
+                        <p className="text-neutral-400 text-base">{description}</p>
+                    )}
+                </div>
+                {actions && <div className="flex items-center gap-3">{actions}</div>}
+            </div>
+        </div>
+    );
+}
