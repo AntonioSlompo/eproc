@@ -16,7 +16,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 {label && (
                     <label
                         htmlFor={id}
-                        className="block text-sm font-medium mb-2 text-neutral-300"
+                        className="block text-[var(--text-sm)] font-medium mb-[var(--spacing-xs)] text-neutral-300"
                     >
                         {label}
                         {props.required && <span className="text-red-400 ml-1">*</span>}
@@ -25,7 +25,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 <input
                     type={type}
                     className={`
-            w-full px-4 py-3 rounded-lg
+            w-full px-[var(--spacing-md)] rounded-lg
+            h-[var(--input-height)]
+            text-[var(--text-base)]
             glass-card border
             ${error ? "border-red-500 focus:border-red-500" : "border-white/10 focus:border-blue-500"}
             focus:neon-border outline-none
@@ -41,12 +43,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     {...props}
                 />
                 {error && (
-                    <p id={`${id}-error`} className="mt-1 text-sm text-red-400">
+                    <p id={`${id}-error`} className="mt-[var(--spacing-xs)] text-[var(--text-sm)] text-red-400">
                         {error}
                     </p>
                 )}
                 {helperText && !error && (
-                    <p id={`${id}-helper`} className="mt-1 text-sm text-neutral-400">
+                    <p id={`${id}-helper`} className="mt-[var(--spacing-xs)] text-[var(--text-sm)] text-neutral-400">
                         {helperText}
                     </p>
                 )}

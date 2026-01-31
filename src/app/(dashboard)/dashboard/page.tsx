@@ -8,13 +8,13 @@ export default function DashboardPage() {
         <div className="space-y-8">
             {/* Welcome Section */}
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div>
-                    <h1 className="text-3xl font-bold mb-2">Bem-vindo ao Dashboard</h1>
-                    <p className="text-neutral-400">Visão geral do sistema de procurement</p>
+                <div className="mb-density-lg">
+                    <h2 className="text-density-3xl font-bold mb-density-xs">Bem-vindo ao Dashboard</h2>
+                    <p className="text-density-sm text-neutral-400">Visão geral do sistema de procurement</p>
                 </div>
                 <Link
                     href="/dashboard/requisitions/new"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-medium transition-all hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] group"
+                    className="inline-flex items-center gap-[var(--spacing-xs)] px-[var(--spacing-lg)] py-[var(--spacing-sm)] rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-medium text-[var(--text-sm)] transition-all hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] group"
                 >
                     <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform" />
                     Nova Requisição
@@ -22,7 +22,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-density-md mb-density-lg">
                 <StatCard
                     icon={ShoppingCart}
                     label="Total de Requisições"
@@ -54,59 +54,44 @@ export default function DashboardPage() {
             </div>
 
             {/* Content Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-[var(--spacing-lg)]">
                 {/* Recent Activity - Takes 2 columns */}
                 <div className="lg:col-span-2">
                     <RecentActivity />
                 </div>
 
                 {/* Quick Actions */}
-                <div className="glass-card p-6">
-                    <h3 className="text-xl font-bold mb-6">Ações Rápidas</h3>
-                    <div className="space-y-3">
+                <div className="glass-card p-density-lg rounded-xl border border-white/10">
+                    <h3 className="text-density-xl font-bold mb-density-md">Ações Rápidas</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-density-sm">
                         <Link
                             href="/dashboard/requisitions/new"
-                            className="block p-4 rounded-lg border border-white/10 hover:border-blue-500 hover:bg-white/5 transition-all group"
+                            className="flex flex-col items-center gap-density-sm p-density-md rounded-lg border border-white/10 hover:border-blue-500 hover:bg-white/5 transition-all group"
                         >
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
-                                    <ShoppingCart className="w-5 h-5" />
-                                </div>
-                                <div>
-                                    <div className="font-medium">Nova Requisição</div>
-                                    <div className="text-xs text-neutral-400">Criar pedido de compra</div>
-                                </div>
+                            <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
+                                <ShoppingCart className="w-5 h-5" />
                             </div>
+                            <span className="text-density-sm font-medium group-hover:text-blue-400 transition-colors">Nova Requisição</span>
                         </Link>
 
                         <Link
                             href="/dashboard/products"
-                            className="block p-4 rounded-lg border border-white/10 hover:border-purple-500 hover:bg-white/5 transition-all group"
+                            className="flex flex-col items-center gap-density-sm p-density-md rounded-lg border border-white/10 hover:border-purple-500 hover:bg-white/5 transition-all group"
                         >
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform">
-                                    <Package className="w-5 h-5" />
-                                </div>
-                                <div>
-                                    <div className="font-medium">Gerenciar Produtos</div>
-                                    <div className="text-xs text-neutral-400">Catálogo de produtos</div>
-                                </div>
+                            <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform">
+                                <Package className="w-5 h-5" />
                             </div>
+                            <span className="text-density-sm font-medium group-hover:text-purple-400 transition-colors">Gerenciar Produtos</span>
                         </Link>
 
                         <Link
                             href="/dashboard/suppliers"
-                            className="block p-4 rounded-lg border border-white/10 hover:border-green-500 hover:bg-white/5 transition-all group"
+                            className="flex flex-col items-center gap-density-sm p-density-md rounded-lg border border-white/10 hover:border-green-500 hover:bg-white/5 transition-all group"
                         >
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center text-green-400 group-hover:scale-110 transition-transform">
-                                    <Building2 className="w-5 h-5" />
-                                </div>
-                                <div>
-                                    <div className="font-medium">Fornecedores</div>
-                                    <div className="text-xs text-neutral-400">Cadastro de fornecedores</div>
-                                </div>
+                            <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center text-green-400 group-hover:scale-110 transition-transform">
+                                <Building2 className="w-5 h-5" />
                             </div>
+                            <span className="text-density-sm font-medium group-hover:text-green-400 transition-colors">Fornecedores</span>
                         </Link>
                     </div>
                 </div>

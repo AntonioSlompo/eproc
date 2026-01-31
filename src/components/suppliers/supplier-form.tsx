@@ -69,9 +69,9 @@ export function SupplierForm({
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-[var(--spacing-lg)]">
             <FormSection title="Informações Básicas">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--spacing-md)]">
                     <Input
                         label="Nome"
                         name="name"
@@ -128,7 +128,7 @@ export function SupplierForm({
                         </Button>
                     )}
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-[var(--spacing-sm)]">
                     <Button
                         type="button"
                         variant="outline"

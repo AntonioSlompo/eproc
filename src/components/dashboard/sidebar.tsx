@@ -39,23 +39,23 @@ export function Sidebar() {
             {/* Sidebar */}
             <aside
                 className={`
-          fixed lg:sticky top-0 left-0 h-screen w-64 glass-card border-r border-white/10 
-          flex flex-col z-40 transition-transform duration-300
+          fixed lg:sticky top-0 left-0 h-screen w-sidebar glass-card border-r border-white/10 
+          flex flex-col z-40 transition-all duration-300
           ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
         `}
             >
                 {/* Logo */}
-                <div className="p-6 border-b border-white/10">
-                    <Link href="/dashboard" className="flex items-center gap-3 group">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 neon-border flex items-center justify-center font-bold text-white group-hover:scale-105 transition-transform">
+                <div className="p-density-lg border-b border-white/10">
+                    <Link href="/dashboard" className="flex items-center gap-density-sm group">
+                        <div className="w-sidebar-logo h-sidebar-logo rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 neon-border flex items-center justify-center font-bold text-white group-hover:scale-105 transition-transform text-density-base">
                             E
                         </div>
-                        <span className="text-xl font-bold tracking-tight">E-Procurement</span>
+                        <span className="text-density-xl font-bold tracking-tight">E-Procurement</span>
                     </Link>
                 </div>
 
                 {/* Navigation */}
-                <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+                <nav className="flex-1 p-density-md space-y-density-xs overflow-y-auto">
                     {menuItems.map((item) => {
                         const Icon = item.icon;
                         const isActive = pathname === item.href;
@@ -66,7 +66,7 @@ export function Sidebar() {
                                 href={item.href}
                                 onClick={() => setIsOpen(false)}
                                 className={`
-                  flex items-center gap-3 px-4 py-3 rounded-lg transition-all group
+                  flex items-center gap-density-sm px-density-md h-nav-item rounded-lg transition-all group
                   ${isActive
                                         ? "bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500 neon-border text-blue-400"
                                         : "hover:bg-white/5 border border-transparent hover:border-white/10"
@@ -74,7 +74,7 @@ export function Sidebar() {
                 `}
                             >
                                 <Icon className={`w-5 h-5 ${isActive ? "text-blue-400" : "text-neutral-400 group-hover:text-neutral-300"}`} />
-                                <span className={`font-medium ${isActive ? "text-blue-400" : "group-hover:text-neutral-300"}`}>
+                                <span className={`font-medium text-density-sm ${isActive ? "text-blue-400" : "group-hover:text-neutral-300"}`}>
                                     {item.label}
                                 </span>
                             </Link>
@@ -83,9 +83,9 @@ export function Sidebar() {
                 </nav>
 
                 {/* Footer */}
-                <div className="p-4 border-t border-white/10">
-                    <div className="glass-card p-3 text-xs text-neutral-400 text-center">
-                        <div className="flex items-center justify-center gap-2 mb-1">
+                <div className="p-density-md border-t border-white/10">
+                    <div className="glass-card p-density-sm text-density-xs text-neutral-400 text-center">
+                        <div className="flex items-center justify-center gap-density-xs mb-1">
                             <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
                             Sistema Online
                         </div>

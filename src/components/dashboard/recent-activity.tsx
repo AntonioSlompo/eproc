@@ -53,26 +53,26 @@ const activityIcons = {
 
 export function RecentActivity() {
     return (
-        <div className="glass-card p-6">
-            <h3 className="text-xl font-bold mb-6">Atividades Recentes</h3>
+        <div className="glass-card p-density-lg rounded-xl border border-white/10">
+            <h3 className="text-density-xl font-bold mb-density-md">Atividades Recentes</h3>
 
-            <div className="space-y-4">
+            <div className="space-y-density-sm">
                 {mockActivities.map((activity, index) => {
                     const { icon: Icon, color } = activityIcons[activity.type];
 
                     return (
                         <div
                             key={activity.id}
-                            className="flex gap-4 pb-4 border-b border-white/5 last:border-0 last:pb-0 hover:bg-white/5 -mx-2 px-2 py-2 rounded-lg transition-all"
+                            className="flex items-start gap-density-sm p-density-sm rounded-lg hover:bg-white/5 transition-all border border-transparent hover:border-white/10"
                         >
                             <div className={`flex-shrink-0 w-10 h-10 rounded-full bg-white/5 flex items-center justify-center ${color}`}>
                                 <Icon className="w-5 h-5" />
                             </div>
 
                             <div className="flex-1 min-w-0">
-                                <p className="font-medium mb-1">{activity.title}</p>
-                                <p className="text-sm text-neutral-400 mb-1">{activity.description}</p>
-                                <div className="flex items-center gap-2 text-xs text-neutral-500">
+                                <p className="font-medium text-density-sm">{activity.title}</p>
+                                <p className="text-density-xs text-neutral-400">{activity.description}</p>
+                                <div className="flex items-center gap-density-xs text-density-xs text-neutral-500">
                                     <span>{activity.user}</span>
                                     <span>•</span>
                                     <span>{activity.timestamp}</span>
@@ -83,7 +83,7 @@ export function RecentActivity() {
                 })}
             </div>
 
-            <button className="w-full mt-4 py-2 text-sm text-blue-400 hover:text-blue-300 transition-colors">
+            <button className="w-full mt-[var(--spacing-md)] py-[var(--spacing-xs)] text-[var(--text-sm)] text-blue-400 hover:text-blue-300 transition-colors">
                 Ver todas as atividades →
             </button>
         </div>

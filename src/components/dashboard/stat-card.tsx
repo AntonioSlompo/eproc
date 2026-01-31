@@ -20,18 +20,18 @@ const colorClasses = {
 
 export function StatCard({ icon: Icon, label, value, trend, color = "blue" }: StatCardProps) {
     return (
-        <div className="glass-card p-6 hover:neon-border transition-all group">
+        <div className="glass-card p-density-lg hover:neon-border transition-all group">
             <div className="flex items-start justify-between">
                 <div className="flex-1">
-                    <p className="text-sm text-neutral-400 mb-2">{label}</p>
-                    <p className="text-3xl font-bold mb-1">{value}</p>
+                    <p className="text-density-sm text-neutral-400 mb-density-xs">{label}</p>
+                    <p className="text-density-3xl font-bold mb-density-xs">{value}</p>
                     {trend && (
-                        <p className={`text-sm ${trend.isPositive ? "text-green-400" : "text-red-400"}`}>
+                        <p className={`text-density-sm ${trend.isPositive ? "text-green-400" : "text-red-400"}`}>
                             {trend.isPositive ? "↑" : "↓"} {trend.value}
                         </p>
                     )}
                 </div>
-                <div className={`p-3 rounded-xl bg-gradient-to-br ${colorClasses[color]} border group-hover:scale-110 transition-transform`}>
+                <div className={`p-density-sm rounded-xl bg-gradient-to-br ${colorClasses[color]} border group-hover:scale-110 transition-transform`}>
                     <Icon className="w-6 h-6" />
                 </div>
             </div>

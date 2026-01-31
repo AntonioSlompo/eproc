@@ -71,9 +71,9 @@ export function SuppliersTable({ suppliers, pagination, searchQuery }: Suppliers
     };
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-[var(--spacing-md)]">
             {/* Search Bar */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-[var(--spacing-md)]">
                 <div className="relative flex-1 max-w-md">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
                     <Input
@@ -92,16 +92,16 @@ export function SuppliersTable({ suppliers, pagination, searchQuery }: Suppliers
                     <table className="w-full">
                         <thead className="bg-white/5 border-b border-white/10">
                             <tr>
-                                <th className="px-6 py-4 text-left text-sm font-semibold">Nome</th>
-                                <th className="px-6 py-4 text-left text-sm font-semibold">Email</th>
-                                <th className="px-6 py-4 text-left text-sm font-semibold">Telefone</th>
-                                <th className="px-6 py-4 text-right text-sm font-semibold">Ações</th>
+                                <th className="px-[var(--spacing-lg)] py-[var(--spacing-md)] text-left text-[var(--text-sm)] font-semibold">Nome</th>
+                                <th className="px-[var(--spacing-lg)] py-[var(--spacing-md)] text-left text-[var(--text-sm)] font-semibold">Email</th>
+                                <th className="px-[var(--spacing-lg)] py-[var(--spacing-md)] text-left text-[var(--text-sm)] font-semibold">Telefone</th>
+                                <th className="px-[var(--spacing-lg)] py-[var(--spacing-md)] text-right text-[var(--text-sm)] font-semibold">Ações</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-white/5">
                             {suppliers.length === 0 ? (
                                 <tr>
-                                    <td colSpan={4} className="px-6 py-12 text-center text-neutral-400">
+                                    <td colSpan={4} className="px-[var(--spacing-lg)] py-[var(--spacing-xl)] text-center text-neutral-400 text-[var(--text-sm)]">
                                         {search ? (
                                             <>Nenhum fornecedor encontrado para "{search}"</>
                                         ) : (
@@ -115,15 +115,15 @@ export function SuppliersTable({ suppliers, pagination, searchQuery }: Suppliers
                                         key={supplier.id}
                                         className="hover:bg-white/5 transition-colors"
                                     >
-                                        <td className="px-6 py-4">
-                                            <div className="font-medium">{supplier.name}</div>
+                                        <td className="px-[var(--spacing-lg)] py-[var(--spacing-md)]">
+                                            <div className="font-medium text-[var(--text-base)]">{supplier.name}</div>
                                         </td>
-                                        <td className="px-6 py-4 text-neutral-400">{supplier.email}</td>
-                                        <td className="px-6 py-4 text-neutral-400">
+                                        <td className="px-[var(--spacing-lg)] py-[var(--spacing-md)] text-neutral-400 text-[var(--text-sm)]">{supplier.email}</td>
+                                        <td className="px-[var(--spacing-lg)] py-[var(--spacing-md)] text-neutral-400 text-[var(--text-sm)]">
                                             {supplier.phone || "-"}
                                         </td>
-                                        <td className="px-6 py-4">
-                                            <div className="flex items-center justify-end gap-2">
+                                        <td className="px-[var(--spacing-lg)] py-[var(--spacing-md)]">
+                                            <div className="flex items-center justify-end gap-[var(--spacing-xs)]">
                                                 <Link href={`/dashboard/suppliers/${supplier.id}/edit`}>
                                                     <Button variant="ghost" size="sm">
                                                         <Edit className="w-4 h-4" />
@@ -149,11 +149,11 @@ export function SuppliersTable({ suppliers, pagination, searchQuery }: Suppliers
 
                 {/* Pagination */}
                 {pagination.totalPages > 1 && (
-                    <div className="px-6 py-4 border-t border-white/10 flex items-center justify-between">
-                        <div className="text-sm text-neutral-400">
+                    <div className="px-[var(--spacing-lg)] py-[var(--spacing-md)] border-t border-white/10 flex items-center justify-between">
+                        <div className="text-[var(--text-sm)] text-neutral-400">
                             Mostrando {suppliers.length} de {pagination.total} fornecedores
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-[var(--spacing-xs)]">
                             <Button
                                 variant="outline"
                                 size="sm"
@@ -162,7 +162,7 @@ export function SuppliersTable({ suppliers, pagination, searchQuery }: Suppliers
                             >
                                 Anterior
                             </Button>
-                            <div className="text-sm text-neutral-400">
+                            <div className="text-[var(--text-sm)] text-neutral-400">
                                 Página {pagination.page} de {pagination.totalPages}
                             </div>
                             <Button

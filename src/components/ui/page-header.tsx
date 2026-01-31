@@ -16,10 +16,10 @@ interface PageHeaderProps {
 
 export function PageHeader({ title, description, breadcrumbs, actions }: PageHeaderProps) {
     return (
-        <div className="mb-6">
+        <div className="mb-[var(--spacing-lg)]">
             {/* Breadcrumbs */}
             {breadcrumbs && breadcrumbs.length > 0 && (
-                <nav className="flex items-center gap-2 text-sm mb-3" aria-label="Breadcrumb">
+                <nav className="flex items-center gap-[var(--spacing-xs)] text-[var(--text-sm)] mb-[var(--spacing-sm)]" aria-label="Breadcrumb">
                     {breadcrumbs.map((crumb, index) => (
                         <div key={index} className="flex items-center gap-2">
                             {index > 0 && (
@@ -43,9 +43,9 @@ export function PageHeader({ title, description, breadcrumbs, actions }: PageHea
             {/* Header */}
             <div className="flex items-start justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold mb-2">{title}</h1>
+                    <h1 className="text-[var(--text-3xl)] font-bold mb-[var(--spacing-xs)]">{title}</h1>
                     {description && (
-                        <p className="text-neutral-400 text-base">{description}</p>
+                        <p className="text-neutral-400 text-[var(--text-base)]">{description}</p>
                     )}
                 </div>
                 {actions && <div className="flex items-center gap-3">{actions}</div>}

@@ -1,6 +1,7 @@
 "use client";
 
 import { ThemeToggle } from "@/components/theme-toggle";
+import { DensityToggle } from "@/components/density-toggle";
 import { Bell, ChevronDown, LogOut, Settings, User } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useSession } from "next-auth/react";
@@ -39,15 +40,15 @@ export function Header() {
     };
 
     return (
-        <header className="sticky top-0 z-30 glass-card border-b border-white/10 px-6 py-4">
+        <header className="sticky top-0 z-30 glass-card border-b border-white/10 px-density-lg py-density-md">
             <div className="flex items-center justify-between">
                 {/* Left side - could add breadcrumbs here */}
                 <div className="flex-1">
-                    <h1 className="text-2xl font-bold">Dashboard</h1>
+                    <h1 className="text-density-2xl font-bold">Dashboard</h1>
                 </div>
 
                 {/* Right side - Actions */}
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-density-md">
                     {/* Notifications */}
                     <button
                         className="relative p-2 rounded-lg hover:bg-white/5 border border-transparent hover:border-white/10 transition-all group"
@@ -60,11 +61,14 @@ export function Header() {
                     {/* Theme Toggle */}
                     <ThemeToggle />
 
+                    {/* Density Toggle */}
+                    <DensityToggle />
+
                     {/* User Menu */}
                     <div className="relative" ref={menuRef}>
                         <button
                             onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                            className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/5 border border-transparent hover:border-white/10 transition-all group"
+                            className="flex items-center gap-density-sm px-density-sm py-density-xs rounded-lg hover:bg-white/5 border border-transparent hover:border-white/10 transition-all group"
                         >
                             {session?.user?.image ? (
                                 <img
@@ -78,8 +82,8 @@ export function Header() {
                                 </div>
                             )}
                             <div className="hidden md:block text-left">
-                                <div className="text-sm font-medium">{userName}</div>
-                                <div className="text-xs text-neutral-400">{roleLabels[userRole] || userRole}</div>
+                                <div className="text-density-sm font-medium">{userName}</div>
+                                <div className="text-density-xs text-neutral-400">{roleLabels[userRole] || userRole}</div>
                             </div>
                             <ChevronDown className={`w-4 h-4 text-neutral-400 transition-transform ${isUserMenuOpen ? "rotate-180" : ""}`} />
                         </button>
@@ -87,16 +91,16 @@ export function Header() {
                         {/* Dropdown Menu */}
                         {isUserMenuOpen && (
                             <div className="absolute right-0 mt-2 w-56 bg-[var(--background)] border border-white/20 rounded-lg shadow-2xl overflow-hidden animate-fade-in-up backdrop-blur-xl">
-                                <div className="p-3 border-b border-white/10 bg-white/5">
-                                    <div className="font-medium">{userName}</div>
-                                    <div className="text-sm text-neutral-400">{userEmail}</div>
+                                <div className="p-density-sm border-b border-white/10 bg-white/5">
+                                    <div className="font-medium text-density-base">{userName}</div>
+                                    <div className="text-density-sm text-neutral-400">{userEmail}</div>
                                 </div>
                                 <div className="p-2">
-                                    <button className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/10 transition-all text-left group">
+                                    <button className="w-full flex items-center gap-density-sm px-density-sm py-density-xs rounded-lg hover:bg-white/10 transition-all text-left group text-density-sm">
                                         <User className="w-4 h-4 text-neutral-400 group-hover:text-neutral-300" />
                                         <span className="group-hover:text-neutral-300">Perfil</span>
                                     </button>
-                                    <button className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/10 transition-all text-left group">
+                                    <button className="w-full flex items-center gap-density-sm px-density-sm py-density-xs rounded-lg hover:bg-white/10 transition-all text-left group text-density-sm">
                                         <Settings className="w-4 h-4 text-neutral-400 group-hover:text-neutral-300" />
                                         <span className="group-hover:text-neutral-300">Configurações</span>
                                     </button>
@@ -104,7 +108,7 @@ export function Header() {
                                 <div className="p-2 border-t border-white/10">
                                     <button
                                         onClick={handleLogout}
-                                        className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-red-500/10 hover:border-red-500 transition-all text-left group text-red-400"
+                                        className="w-full flex items-center gap-density-sm px-density-sm py-density-xs rounded-lg hover:bg-red-500/10 hover:border-red-500 transition-all text-left group text-red-400 text-density-sm"
                                     >
                                         <LogOut className="w-4 h-4" />
                                         <span>Sair</span>
