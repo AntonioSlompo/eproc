@@ -3,12 +3,41 @@
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { SupplierStatus, PersonType, TaxRegime, IeIndicator } from "@prisma/client";
 
+// Matching the Zod schema from the form roughly
 export interface SupplierFormData {
+    id?: string;
+    type: PersonType;
+    document: string;
     name: string;
-    email: string;
+    tradeName?: string;
+    stateRegistration?: string;
+    municipalRegistration?: string;
+    cnaeMainCode?: string;
+    cnaeMainDesc?: string;
+
+    // Address
+    cep?: string;
+    street?: string;
+    number?: string;
+    complement?: string;
+    neighborhood?: string;
+    city?: string;
+    state?: string;
+    latitude?: number;
+    longitude?: number;
+
+    // Contact
+    email?: string;
     phone?: string;
-    address?: string;
+    website?: string;
+
+    // Fiscal
+    taxRegime?: TaxRegime;
+    ieIndicator?: IeIndicator;
+
+    observations?: string;
 }
 
 export async function getSuppliers(params?: {
@@ -24,7 +53,8 @@ export async function getSuppliers(params?: {
         ? {
             OR: [
                 { name: { contains: params.search, mode: "insensitive" as const } },
-                { email: { contains: params.search, mode: "insensitive" as const } },
+                { document: { contains: params.search, mode: "insensitive" as const } },
+                { tradeName: { contains: params.search, mode: "insensitive" as const } },
             ],
         }
         : {};
@@ -53,6 +83,10 @@ export async function getSuppliers(params?: {
 export async function getSupplier(id: string) {
     const supplier = await prisma.supplier.findUnique({
         where: { id },
+        include: {
+            contacts: true,
+            bankAccounts: true
+        }
     });
 
     if (!supplier) {
@@ -64,80 +98,128 @@ export async function getSupplier(id: string) {
 
 export async function createSupplier(data: SupplierFormData) {
     try {
-        // Validate required fields
-        if (!data.name || !data.email) {
-            return { error: "Nome e email são obrigatórios" };
+        // Basic validation
+        if (!data.name || !data.document) {
+            return { error: "Razão Social e Documento são obrigatórios" };
         }
 
-        // Check if email already exists
-        const existing = await prisma.supplier.findFirst({
-            where: { email: data.email },
+        // Check if document already exists
+        const existing = await prisma.supplier.findUnique({
+            where: { document: data.document },
         });
 
         if (existing) {
-            return { error: "Este email já está cadastrado" };
+            return { error: "Este documento (CNPJ/CPF) já está cadastrado" };
         }
 
-        await prisma.supplier.create({
+        const newSupplier = await prisma.supplier.create({
             data: {
+                type: data.type,
+                document: data.document,
                 name: data.name,
-                email: data.email,
-                phone: data.phone || null,
-                address: data.address || null,
+                tradeName: data.tradeName,
+                stateRegistration: data.stateRegistration,
+                municipalRegistration: data.municipalRegistration,
+                cnaeMainCode: data.cnaeMainCode,
+                cnaeMainDesc: data.cnaeMainDesc,
+
+                cep: data.cep,
+                street: data.street,
+                number: data.number,
+                complement: data.complement,
+                neighborhood: data.neighborhood,
+                city: data.city,
+                state: data.state,
+                latitude: data.latitude,
+                longitude: data.longitude,
+
+                taxRegime: data.taxRegime || null,
+                ieIndicator: data.ieIndicator || null,
+                website: data.website,
+                notes: data.observations,
+
+                // For now, create a default contact if email/phone provided
+                contacts: (data.email || data.phone) ? {
+                    create: {
+                        name: data.name.split(" ")[0], // Placeholder
+                        email: data.email,
+                        phone: data.phone,
+                        role: "Principal"
+                    }
+                } : undefined
             },
         });
 
         revalidatePath("/dashboard/suppliers");
+        return { success: true, id: newSupplier.id };
     } catch (error) {
         console.error("Error creating supplier:", error);
         return { error: "Erro ao criar fornecedor" };
     }
-
-    redirect("/dashboard/suppliers");
 }
 
 export async function updateSupplier(id: string, data: SupplierFormData) {
     try {
-        // Validate required fields
-        if (!data.name || !data.email) {
-            return { error: "Nome e email são obrigatórios" };
+        if (!data.name || !data.document) {
+            return { error: "Razão Social e Documento são obrigatórios" };
         }
 
-        // Check if email already exists (excluding current supplier)
+        // Check for duplicate document on other suppliers
         const existing = await prisma.supplier.findFirst({
             where: {
-                email: data.email,
+                document: data.document,
                 NOT: { id },
             },
         });
 
         if (existing) {
-            return { error: "Este email já está cadastrado" };
+            return { error: "Este documento já está em uso por outro fornecedor" };
         }
 
         await prisma.supplier.update({
             where: { id },
             data: {
+                type: data.type,
+                document: data.document,
                 name: data.name,
-                email: data.email,
-                phone: data.phone || null,
-                address: data.address || null,
+                tradeName: data.tradeName,
+                stateRegistration: data.stateRegistration,
+                municipalRegistration: data.municipalRegistration,
+                cnaeMainCode: data.cnaeMainCode,
+                cnaeMainDesc: data.cnaeMainDesc,
+
+                cep: data.cep,
+                street: data.street,
+                number: data.number,
+                complement: data.complement,
+                neighborhood: data.neighborhood,
+                city: data.city,
+                state: data.state,
+                latitude: data.latitude,
+                longitude: data.longitude,
+
+                taxRegime: data.taxRegime || null,
+                ieIndicator: data.ieIndicator || null,
+                website: data.website,
+                notes: data.observations,
             },
         });
 
+        // Note: Contacts/BankAccounts update logic to be added later if needed via sub-forms
+
         revalidatePath("/dashboard/suppliers");
         revalidatePath(`/dashboard/suppliers/${id}/edit`);
+
+        return { success: true };
     } catch (error) {
         console.error("Error updating supplier:", error);
         return { error: "Erro ao atualizar fornecedor" };
     }
-
-    redirect("/dashboard/suppliers");
 }
 
 export async function deleteSupplier(id: string) {
     try {
-        // Check if supplier has products
+        // Check products using count
         const productsCount = await prisma.product.count({
             where: { supplierId: id },
         });

@@ -116,14 +116,108 @@ model Product {
   requisitionItems RequisitionItem[]
 }
 
+// Enums for Supplier Management
+enum PersonType {
+  FISICA
+  JURIDICA
+}
+
+enum TaxRegime {
+  SIMPLES_NACIONAL
+  LUCRO_PRESUMIDO
+  LUCRO_REAL
+}
+
+enum IeIndicator {
+  CONTRIBUINTE
+  ISENTO
+  NAO_CONTRIBUINTE
+}
+
+enum SupplierStatus {
+  PENDING
+  APPROVED
+  BLOCKED
+  SUSPENDED
+}
+
 model Supplier {
   id        String   @id @default(cuid())
-  name      String
-  email     String?
-  phone     String?
-  address   String?
+  
+  // 1. Identity
+  type      PersonType @default(JURIDICA)
+  document  String   @unique // CNPJ or CPF
+  name      String   // Razão Social / Nome Completo
+  tradeName String?  // Nome Fantasia
+  
+  stateRegistration     String? // IE
+  municipalRegistration String? // IM
+  
+  // CNAE (Economic Activity)
+  cnaeMainCode String?
+  cnaeMainDesc String?
+
+  // 2. Location
+  cep          String?
+  street       String?
+  number       String?
+  complement   String?
+  neighborhood String?
+  city         String?
+  state        String?
+  latitude     Float?
+  longitude    Float?
+
+  // 3. Fiscal & Financial
+  taxRegime      TaxRegime?
+  ieIndicator    IeIndicator?
+  paymentTerms   String? // e.g. "30 days"
+  
+  // 4. Categorization
+  category   String? // e.g. "TI", "Limpeza"
+  status     SupplierStatus @default(PENDING)
+  rating     Float?
+  website    String?
+  notes      String?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  products Product[]
+  // Relations
+  contacts     Contact[]
+  bankAccounts BankAccount[]
+  products     Product[]
+}
+
+model Contact {
+  id         String   @id @default(cuid())
+  supplierId String
+  supplier   Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  
+  name       String
+  email      String?
+  phone      String?
+  role       String? // Comercial, Financeiro, Suporte
+  
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([supplierId])
+}
+
+model BankAccount {
+  id         String   @id @default(cuid())
+  supplierId String
+  supplier   Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  
+  bankName   String
+  agency     String
+  account    String
+  pixKey     String?
+  pixKeyType String? // Email, CPF, Random, etc.
+  
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([supplierId])
 }

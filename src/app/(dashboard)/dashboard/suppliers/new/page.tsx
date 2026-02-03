@@ -15,7 +15,7 @@ export default function NewSupplierPage() {
                 ]}
             />
 
-            <SupplierForm onSubmit={createSupplier} submitLabel="Criar Fornecedor" />
+            <SupplierForm />
         </div>
     );
 }

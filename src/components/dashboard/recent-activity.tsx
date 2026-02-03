@@ -53,10 +53,10 @@ const activityIcons = {
 
 export function RecentActivity() {
     return (
-        <div className="glass-card p-density-lg rounded-xl border border-white/10">
-            <h3 className="text-density-xl font-bold mb-density-md">Atividades Recentes</h3>
+        <div className="glass-card p-density-lg rounded-xl border border-white/10 h-full flex flex-col">
+            <h3 className="text-density-xl font-bold mb-density-md text-white/90">Atividades Recentes</h3>
 
-            <div className="space-y-density-sm">
+            <div className="space-y-density-sm flex-1">
                 {mockActivities.map((activity, index) => {
                     const { icon: Icon, color } = activityIcons[activity.type];
 
@@ -83,7 +83,7 @@ export function RecentActivity() {
                 })}
             </div>
 
-            <button className="w-full mt-[var(--spacing-md)] py-[var(--spacing-xs)] text-[var(--text-sm)] text-blue-400 hover:text-blue-300 transition-colors">
+            <button className="w-full mt-[var(--spacing-md)] py-[var(--spacing-xs)] text-[var(--text-sm)] text-blue-400 hover:text-blue-300 transition-colors border-t border-white/5 pt-4">
                 Ver todas as atividades →
             </button>
         </div>
